@@ -1,0 +1,124 @@
+﻿@model ListadoObjetivos
+
+@{
+    ViewData["Title"] = "Página de inicio";
+}
+
+
+    <div class="text-center">
+        <h1 class="display-4">Objetivos</h1>
+        <p>Aqui podras agregar y ver los objetivos y/o actividades que tienes como meta.</p>
+        <a class="btn btn-primary mb-3" asp-action="AgregarObjetivo">
+            Agregar nuevo objetivo
+        </a>
+    </div>
+
+    <div class="container-table">
+
+        @if (Model.listadoObjetivos is null)
+        {
+            <h5>
+                Agrega un objetivo o actividad
+            </h5>
+        }
+        else
+        {
+            <form method="post">
+            <table class="table tables-info table-bordered tables-info">
+                    <thead>
+                        <tr>
+                            <th>Objetivo</th>
+                            <th> Descripcion</th>
+                            <th> Fecha</th>
+                            <th> Forma de pago</th>
+                            <th> Cantidad Necesaria</th>
+                            <th> Cantidad Adicional</th>
+                            <th> Acciones</th>
+                        </tr>
+                    </thead>
+                    @foreach (var objetivo in Model.listadoObjetivos)
+                    {
+                        if (objetivo.Activo)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td data-label="addddd">@objetivo.Nombre</td>
+                                    <td data-cell="addddd"> @objetivo.Descripcion</td>
+                                <td data-cell="addddd"> @objetivo.FechaLimite.ToString("dd/MM/yyyy")</td>
+                                <td data-cell="addddd"> @objetivo.FormaPago</td>
+                                <td data-cell="addddd"> RD$@objetivo.Cantidad</td>
+                                <td data-cell="addddd"> RD$@objetivo.CantidadAdicional</td>
+                                    <td class="align-items-center">
+
+                                        <div>
+                                        <a class="btn btn-primary" asp-action="ListadoPersonas" asp-route-id="@objetivo.Id">
+                                            <i class="bi bi-box-arrow-in-right"></i>
+                                        </a>
+
+                                        <a class="btn btn-success" asp-action="EditarObjetivo" asp-route-id="@objetivo.Id">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+
+                                        <a class="btn btn-danger" asp-action="EliminarObjetivo" asp-route-id="@objetivo.Id">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                        </div>
+               
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        } 
+                    }
+
+                </table>
+            </form>
+
+        }
+    </div>
+ 
+      
+@section scripts {
+ 
+    <partial name="_ValidationScriptsPartial"></partial>
+
+    <script>
+        function AddTableARIA() {
+            try {
+                var allTables = document.querySelectorAll('table');
+                for (var i = 0; i < allTables.length; i++) {
+                    allTables[i].setAttribute('role', 'table');
+                }
+                var allCaptions = document.querySelectorAll('caption');
+                for (var i = 0; i < allCaptions.length; i++) {
+                    allCaptions[i].setAttribute('role', 'caption');
+                }
+                var allRowGroups = document.querySelectorAll('thead, tbody, tfoot');
+                for (var i = 0; i < allRowGroups.length; i++) {
+                    allRowGroups[i].setAttribute('role', 'rowgroup');
+                }
+                var allRows = document.querySelectorAll('tr');
+                for (var i = 0; i < allRows.length; i++) {
+                    allRows[i].setAttribute('role', 'row');
+                }
+                var allCells = document.querySelectorAll('td');
+                for (var i = 0; i < allCells.length; i++) {
+                    allCells[i].setAttribute('role', 'cell');
+                }
+                var allHeaders = document.querySelectorAll('th');
+                for (var i = 0; i < allHeaders.length; i++) {
+                    allHeaders[i].setAttribute('role', 'columnheader');
+                }
+                // this accounts for scoped row headers
+                var allRowHeaders = document.querySelectorAll('th[scope=row]');
+                for (var i = 0; i < allRowHeaders.length; i++) {
+                    allRowHeaders[i].setAttribute('role', 'rowheader');
+                }
+            } catch (e) {
+                console.log("AddTableARIA(): " + e);
+            }
+        }
+
+        AddTableARIA();
+    </script>
+}

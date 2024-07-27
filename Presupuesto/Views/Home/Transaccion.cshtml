@@ -1,0 +1,60 @@
+﻿@using Presupuesto.Entidades
+
+@model TransaccionesDTO
+
+@{
+    var IdPersona = ViewData["IdPersona"];
+    var persona = ViewBag.message; 
+}
+<h3>Agregar transacción a @persona.Nombre</h3>
+<h5>(Pago restante: RD$@persona.Pago_restante)</h5>
+<p>Aquí podrás agregar alguna prueba de una transacción bancaria, para que puedas llevar el registro de estas. 
+    
+</p>
+<form asp-action="Transaccion" id="myForm" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <input type="hidden" name="personaId" value="@persona.Id" />
+                    <div class="mb-3">
+                        <label asp-for="CantidadDepositada" class="form-label"></label>
+                        <input type="number" asp-for="CantidadDepositada" class="form-control">
+                        <span asp-validation-for="CantidadDepositada" class="text-danger"></span>
+                    </div>
+
+                <div class="mb-3">
+                    <label asp-for="Codigo_transaccion" class="form-label"></label>
+                    <input type="text" asp-for="Codigo_transaccion" class="form-control">
+                    <span asp-validation-for="Codigo_transaccion" class="text-danger"></span>
+                </div>
+
+                    <div class="mb-3">
+                        <label asp-for="FechaTransaccion" class="form-label"></label>
+                        <input type="date" asp-for="FechaTransaccion" class="form-control" >
+                        <span asp-validation-for="FechaTransaccion" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="File" class="form-label"></label>
+                        <input type="file" asp-for="File" class="form-control" />
+                        <p>Solo fotos (.png .jpg .jpeg) o pdf</p>
+                        <span asp-validation-for="File" class="text-danger"></span>
+                    </div>
+
+                    <div class="modal-footer">
+                        <a class="btn btn-secondary" asp-action="ListadoPersonas" asp-route-id="@persona.ObjetivosId">Volver al Inicio</a>
+                        <button class="btn btn-primary">Guardar transacción</button>
+                    </div>
+                </form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function (event) {
+            // Check if the value of CantidadAdicional is empty
+            var fileInput;
+             
+            fileInput = @persona.Id;
+         
+        });
+    </script>
+}

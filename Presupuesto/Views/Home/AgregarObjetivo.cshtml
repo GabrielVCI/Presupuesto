@@ -1,0 +1,167 @@
+﻿ @model ObjetivoViewModel
+@{
+    ViewData["Title"] = "Objetivos";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Agregar nuevo objetivo</h1>
+    <p>Aqui podras agregar un nuevo objetivo u actividad, como viajar o comprar una casa.</p>
+</div>
+
+<div class=""></div>
+
+<form asp-action="AgregarObjetivo" id="myForm">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="Nombre" for="exampleFormControlInput1" class="form-label"></label>
+        <input type="text" asp-for="Nombre" class="form-control" placeholder="Resort Punta Cana 2024" id="exampleFormControlInput1">
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Descripcion" class="form-label"></label>
+        <input type="text" asp-for="Descripcion" class="form-control" placeholder="El mejor verano que viviras" id="exampleFormControlInput1">
+        <span asp-validation-for="Descripcion" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="FechaLimite" class="form-label"></label>
+        <input type="date" asp-for="FechaLimite" class="form-control">
+        <span asp-validation-for="FechaLimite" class="text-danger"></span>
+    </div>
+
+    <input type="hidden" asp-for="FormaPago" id="forma-pago"/> 
+
+    <label class="form-label">Forma de pago</label>
+    <select id="select-option" class="form-select mb-3">
+        <option value="">Seleccione una opcion</option>
+        <option value="PorPersona">Por persona</option>
+        @* <option value="PagoUnico">Pago único</option> *@
+         
+    </select>
+
+
+    <div class="mb-3" id="input-container">
+
+    </div>
+
+    <div class="mb-3" id="input-container-opcional">
+         
+
+    </div>
+     
+    <div class="mb-3">
+        <button class="btn btn-primary">Agregar objetivo</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+
+@section scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+
+        document.getElementById('select-option').addEventListener('change', function () {
+            var selectedOption = this.value;
+            var inputContainer = document.getElementById('input-container');
+            var inputContainerOpcional = document.getElementById('input-container-opcional');
+            var formaPagoInput = document.getElementById('forma-pago');
+
+            // Clear previous inputs
+            inputContainer.innerHTML = '';
+            inputContainerOpcional.innerHTML = '';
+
+            if (selectedOption !== '') {
+                // Check if the input group for the "PorPersona" option already exists
+                var existingInputGroup = document.querySelector('.input-group[data-option="PorPersona"]');
+
+                if (selectedOption === 'PagoUnico') {
+                    var inputGroup = createInputGroup('PagoUnico', 'Ej: Precio del vehiculo');
+                    formaPagoInput.setAttribute("value", "Pago unico")
+                    inputContainer.appendChild(inputGroup);
+                     
+                } else if (selectedOption === 'PorPersona') {
+                    // If the input group for "PorPersona" already exists, update its content
+                    formaPagoInput.setAttribute("value", "Por Persona")
+
+                    if (existingInputGroup) {
+                        var inputCantidad = existingInputGroup.querySelector('input[name="Cantidad"]');
+                        inputCantidad.setAttribute('placeholder', 'Ej: Precio por persona');
+                        inputContainer.appendChild(existingInputGroup);
+
+                        // Also update the optional input group if it exists
+                        var existingInputGroupOpcional = document.querySelector('.input-group-opcional');
+                        if (existingInputGroupOpcional) {
+                            inputContainerOpcional.appendChild(existingInputGroupOpcional);
+                        } else {
+                            inputContainerOpcional.appendChild(createInputCantidadAdicional());
+                        }
+                    } else {
+                        var inputGroup = createInputGroup('PorPersona', 'Ej: Precio por persona');
+                        inputContainer.appendChild(inputGroup);
+                        inputContainerOpcional.appendChild(createInputCantidadAdicional());
+                    }
+                }
+            }
+        });
+
+        function createInputGroup(option, placeholder) {
+            var inputGroup = document.createElement('div');
+            inputGroup.setAttribute('class', 'row');
+
+            inputGroup.classList.add('input-group');
+            inputGroup.setAttribute('data-option', option);
+
+            var labelDescripcion = document.createElement('label');
+            labelDescripcion.setAttribute('class', 'form-label');
+            labelDescripcion.textContent = 'Total a recaudar';
+
+            var inputCantidad = document.createElement('input');
+            inputCantidad.setAttribute('type', 'number');
+            inputCantidad.setAttribute('name', 'Cantidad');
+            inputCantidad.setAttribute('class', 'form-control mb-3');
+            inputCantidad.setAttribute('placeholder', placeholder);
+
+
+            var validationSpan = document.createElement('span');
+            validationSpan.setAttribute('asp-validation-for', 'Cantidad');
+            validationSpan.setAttribute('class', 'text-danger');
+
+            inputGroup.appendChild(labelDescripcion);
+            inputGroup.appendChild(inputCantidad);
+            inputGroup.appendChild(validationSpan);
+
+            return inputGroup;
+        }
+
+        function createInputCantidadAdicional() {
+            var inputGroupOpcional = document.createElement('div');
+            inputGroupOpcional.classList.add('input-group-opcional');
+
+            var labelCantidadAdicional = document.createElement('label');
+            labelCantidadAdicional.setAttribute('class', 'form-label');
+            labelCantidadAdicional.textContent = 'Cantidad Adicional (opcional)';
+
+            var cantidadAdicionalInput = document.createElement('input');
+            cantidadAdicionalInput.setAttribute('type', 'number');
+            cantidadAdicionalInput.setAttribute('name', 'CantidadAdicional');
+            cantidadAdicionalInput.setAttribute('class', 'form-control mb-3');
+            cantidadAdicionalInput.setAttribute('placeholder', 'Ej: Precio por niño/a');
+            inputGroupOpcional.appendChild(labelCantidadAdicional);
+            inputGroupOpcional.appendChild(cantidadAdicionalInput);
+
+
+
+            return inputGroupOpcional;
+        }
+
+        document.getElementById('myForm').addEventListener('submit', function (event) {
+            // Check if the value of CantidadAdicional is empty
+            var cantidadAdicionalInput = document.querySelector('input[name="CantidadAdicional"]');
+            if (!cantidadAdicionalInput.value.trim() || cantidadAdicionalInput.value < 0) {
+                cantidadAdicionalInput.value = '0'; // Set value to 0 if empty
+            } 
+        });
+         
+    </script>
+}

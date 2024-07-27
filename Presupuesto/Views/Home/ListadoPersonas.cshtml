@@ -1,0 +1,86 @@
+﻿@model ListadoPersonas;
+@{
+    ViewData["Title"] = "Home Page";
+    var IdObjetivo = ViewBag.Id;
+    var objetivo = ViewBag.message;
+}
+ 
+<div class="text-center">
+    <form asp-action="ListadoPersonas" method="get">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-10">
+                <input class="form-control"
+                       type="text"
+                       name="buscarPersona"
+                       placeholder="Ingrese el nombre de la persona o grupo"
+                       aria-label="Search">
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-4 mt-3 mt-sm-0">
+                <button class="btn btn-outline-success btn-block" type="submit">Buscar Persona</button>
+            </div>
+        </div>
+    </form>
+    <h1 class="display-4">@objetivo.NombreObjetivo</h1>
+    <p>@objetivo.Descripcion.</p>
+    <a class="btn btn-primary mb-3" asp-action="Crear" asp-route-id="@IdObjetivo">
+        Agregar nuevo aportador
+    </a>
+</div>
+
+
+<div class="d-flex flex-wrap listado-personas">
+    @foreach (var persona in Model.listadoPersonas)
+    {
+        <div class="card m-3 shadow border-0" style="width: 18rem;">
+             
+            <div class="card-body">
+                <h5 class="card-title">@persona.Nombre</h5>
+                <p class="card-text">Total de Personas: @persona.TotalPersonas</p>
+                <p class="card-text">Adultos: @persona.Cantidad_personas | Menores: @persona.CantidadMenores</p>
+                <p class="card-text">Aporte hasta ahora: RD$@persona.Aporte</p>
+                <p class="card-text">Pago restante: RD$@persona.Pago_restante</p>
+                <p class="card-text">Total a pagar: RD$@persona.Total_a_pagar</p>
+                <p class="card-text">Nota: @persona.Nota</p>
+                <div class="d-flex justify-content-between">
+                    @{
+                        if (persona.Aporte >= persona.Total_a_pagar)
+                        {
+                            <button type="button" class="btn btn-success" disabled>Pago completado</button>
+                        }
+                        else
+                        {
+                            <a asp-action="Transaccion" asp-route-id="@persona.Id" class="btn btn-primary">Nuevo aporte</a>
+                        }
+                    }
+                    <a asp-action="ListadoAportes" asp-route-id="@persona.Id" class="btn btn-secondary">Ver aportes</a>
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <a asp-action="ListadoTransacciones" asp-route-id="@persona.Id" style="color:green"><i class="bi bi-bank "></i></a>
+                <a asp-action="Editar" asp-route-id="@persona.Id" style="color:blue"><i class="bi bi-pencil "></i></a>
+                <a asp-action="Eliminar" asp-route-id="@persona.Id" style="color:red"><i class="bi bi-trash "></i></a>
+                <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-question-circle"></i></button>
+            </div>
+        </div>
+    }
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Precios</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Adulto: RD$@objetivo.ObjetivoMonetario</p>
+                    <p>Niño/a: RD$@objetivo.CantidadAdicional</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+ 

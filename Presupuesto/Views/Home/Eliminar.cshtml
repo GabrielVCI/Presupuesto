@@ -1,0 +1,12 @@
+﻿@model Trabajo
+@{
+    var persona = ViewBag.message;
+}
+<h2>¿Seguro quieres eliminar a @persona.Nombre como aportador?</h2>
+
+<div>
+    <form asp-action="Eliminar" method="post">
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a asp-action="ListadoPersonas" asp-route-id="@persona.ObjetivosId" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

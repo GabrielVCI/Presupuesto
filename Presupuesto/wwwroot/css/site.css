@@ -1,0 +1,261 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.registro-login-container{ 
+    height: 70%;
+    width: 70%; 
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-registro-info {
+    height: 100%;
+    width: 50%;
+    background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6) ), url("../images/image-login.png");
+    align-content: center;
+    background-size: cover;
+    background-position: center;
+    color: #f2f2f2;
+    border-radius: 5px 0px 0px 5px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Adding box shadow */
+}
+
+.login-registro-form {
+    background-color: #f2f2f2;
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0px 5px 5px 0px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Adding box shadow */
+}
+
+.body-login-style {
+    background-color: #BEF6FF;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fixed-size-img {
+    width: 100%;
+    height: 200px;  
+    object-fit: cover; 
+}
+
+.listado-transacciones{
+    display: flex;
+    flex-wrap: wrap;
+ }
+
+.button-login {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+} 
+
+.button-login:hover {
+    background-color: black;
+}
+
+.buscador{
+    display: flex;
+    flex-direction: row;
+}
+
+.custom-validation-summary {
+    color: red;
+    border: 1px solid red;
+    padding: 10px;
+    background-color: #f8d7da;
+    font-weight: bold;
+}
+
+tr:nth-of-type(2n) {
+    background-color: #ECECEC;
+}
+
+.form-group .text-danger {
+    position: absolute; 
+}
+
+@media (max-width: 480px) {
+
+    .listado-personas {
+        width: 100%;
+        height: 100%; 
+        display: flex;
+        justify-content: center;
+    } 
+
+    .body-login-style {
+        background-color: black;
+        width: 100%;
+        display: flex;
+        justify-content: end;
+        align-items: center;
+    }  
+
+    .registro-login-container {
+        position: fixed;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+    }
+
+    .login-registro-info{
+        position:absolute;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: start;
+        z-index: 1;
+        text-align: center;
+        padding-top: 30px;
+        border-radius: 0;
+    }
+
+    .login-registro-form {
+        position: fixed;
+        z-index: 10;
+        height: 50%;
+        display: flex;
+        border-radius: 5px;
+        width: 80%;
+        box-shadow: 0 20px 20px rgba(0, 0, 0, 1);
+        background-color: rgba(10, 0, 0, 0.4);
+        color: white;
+    }
+
+    .listado-transacciones{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .tables-info {
+        font-size: 15px;
+        width: 100%;
+    }
+
+    .tables-info-aportes {
+        max-width: 470px;
+        height: auto;
+        margin: auto;
+        font-size: 15px;
+    }
+
+    /*Making the table responsive*/
+    .container-table{
+        width: 100%;
+         
+    }
+    th {
+        display: none;
+    }
+
+    td{
+        display: grid;
+        gap: 0.5rem;
+        grid-template-columns: 12ch auto;
+        padding: 3.5rem 1rem;
+    }
+
+    tr:nth-of-type(2n) {
+        background-color: #ECECEC;
+    }
+
+    td:last-child {
+        padding-bottom: 7rem;
+    }
+
+
+    .table td::before {
+        content: attr(data-label) ": ";
+        font-weight: 700;
+     }
+
+    .tables-info td:nth-of-type(1)::before {
+        content: "Objetivo: ";
+    }
+
+     .tables-info td:nth-of-type(2)::before {
+        content: "Descripcion: ";
+    }
+
+    .tables-info td:nth-of-type(3)::before {
+        content: "Fecha: ";
+    }
+    
+    .tables-info td:nth-of-type(4)::before {
+        content: "Forma de pago: ";
+    }
+    
+    .tables-info td:nth-of-type(5)::before {
+         content: "Cantidad necesaria: ";
+    }
+        
+    .tables-info td:nth-of-type(6)::before {
+         content: "Cantidad Adicional: ";
+    }
+
+    .tables-info td:nth-of-type(7)::before {
+         content: "Acciones: ";
+    }
+
+    .tables-info-aportes td:nth-of-type(1)::before {
+        content: "# de Factura: ";
+    }
+
+    .tables-info-aportes td:nth-of-type(2)::before {
+        content: "Cantidad Depositada: ";
+    }
+
+    .tables-info-aportes td:nth-of-type(3)::before {
+        content: "Fecha: ";
+    }
+
+    .tables-info-aportes td:nth-of-type(4)::before {
+        content: "Codigo de Transaccion: ";
+    }
+
+    .tables-info-aportes td:nth-of-type(5)::before {
+        content: "Acciones: ";
+    }
+     
+    td a {
+        width: 40px;
+    }
+}

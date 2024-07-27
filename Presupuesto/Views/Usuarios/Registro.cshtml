@@ -1,0 +1,37 @@
+﻿@model RegistroViewMode
+
+@{
+    ViewData["Title"] = "Registro";
+}
+<h1 class="ingresa-registrate">Registrate</h1>
+ 
+
+                <form asp-action="Registro">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group mb-4">
+                        <label asp-for="UserName" class="form-label"></label>
+                        <input asp-for="UserName" class="form-control log-reg-input" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="Password" class="form-label"></label>
+                        <input asp-for="Password" class="form-control log-reg-input" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="ConfirmPassword" class="form-label"></label>
+                        <input asp-for="ConfirmPassword" class="form-control log-reg-input" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <button class="btn btn-primary mt-3 button-login">Registrate</button>
+            <a class="btn btn-secondary button-login" asp-action="Login">Deseo loguearme</a>
+                </form>
+ 
+  
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,18 @@
+﻿@model TransaccionesDTO
+@{
+    var transaccion = ViewBag.message;
+    var persona = ViewBag.persona;
+}
+<h4>¿Desea continuar?</h4>
+<p>
+    <b>
+        Estas a punto de eliminar esta transaccion con el codigo @transaccion.Codigo_transaccion. Aun seras capaz de ver la factura en la lista de aportes.
+    </b>
+</p>
+
+<div>
+    <form asp-action="EliminarTransaccion" method="post"> 
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a asp-action="ListadoTransacciones" asp-route-id="@transaccion.PersonaIds" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

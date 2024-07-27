@@ -1,0 +1,70 @@
+﻿@model Trabajo
+
+@{
+    ViewData["Title"] = "Editar Persona";
+    var objetivo = ViewBag.message;
+}
+<div class="text-center">
+    <h1 class="display-4">Edite Aportador del Resort</h1>
+    <p>Edite la informacion de un aportador, aqui se llevara cuanto va pagando.</p>
+</div>
+
+<div class=""></div>
+
+<form asp-action="Editar">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Nombre de la persona o grupo</label>
+        <input type="text" asp-for="Nombre" class="form-control" id="exampleFormControlInput1">
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Cantidad_personas" class="form-label">Cantidad de adultos</label>
+        <input type="number" asp-for="Cantidad_personas" class="form-control" id="exampleFormControlInput1">
+        <span asp-validation-for="Cantidad_personas" class="text-danger"></span>
+    </div>
+
+    @if (objetivo.CantidadAdicional <= 0)
+    {
+        <div class="mb-3">
+            <label asp-for="CantidadMenores" class="form-label">Cantidad de niños (si tiene) *NO APLICA</label>
+            <input disabled type="number" class="form-control" id="cantidad-menores" placeholder="Para agregar menores, debe agregar una cantidad adicional al objetivo">
+        </div>
+    }
+    else
+    {
+        <div class="mb-3">
+            <label asp-for="CantidadMenores" class="form-label">Cantidad de niños (si tiene)</label>
+            <input type="number" asp-for="CantidadMenores" class="form-control" id="cantidad-menores">
+        </div>
+    }
+
+    <div class="mb-3">
+        <label for="exampleFormControlInput" class="form-label">Nota</label>
+        <input type="text" asp-for="Nota" class="form-control" id="exampleFormControlInput">
+        <span asp-validation-for="Nota" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <button class="btn btn-primary">Guardar cambios</button>
+        <a asp-action="ListadoPersonas" asp-route-id="@Model.ObjetivoId" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.getElementById('submit-button').addEventListener('click', function (event) {
+            var menoresInput = document.getElementById('cantidad-menores');
+
+            if (!menoresInput.value.trim()) {
+                menoresInput.value = '0'; 
+            }
+
+        })
+
+    </script>
+}

@@ -1,0 +1,49 @@
+﻿@model TransaccionesDTO
+
+@{
+    var persona = ViewBag.persona;
+}
+<div class="text-center">
+    <h3 class="display-4">Editar transacción de @persona.Nombre</h3>
+    <h6>Pago restante: RD$@persona.Pago_restante</h6>
+    <h6>Aporte hasta ahora: RD$@persona.Aporte</h6>
+    <p>Edite la información de la transacción.</p>
+</div>
+ 
+<form asp-action="EditarTransaccion" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id"/>
+
+    <div class="mb-3">
+        <label asp-for="CantidadDepositada" class="form-label"></label>
+        <input type="text" asp-for="CantidadDepositada" class="form-control">
+        <span asp-validation-for="CantidadDepositada" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Codigo_transaccion" class="form-label"></label>
+        <input type="text" asp-for="Codigo_transaccion" class="form-control">
+        <span asp-validation-for="Codigo_transaccion" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="FechaTransaccion" class="form-label"></label>
+        <input type="date" asp-for="FechaTransaccion" class="form-control">
+        <span asp-validation-for="FechaTransaccion" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="File" class="form-label">Nueva imagen</label>
+        <input type="file" asp-for="File" class="form-control" />
+        <span asp-validation-for="File" class="text-danger"></span>
+    </div>
+
+    <div class="modal-footer">
+        <a class="btn btn-secondary" asp-action="ListadoTransacciones" asp-route-id="@Model.IdPersona">Cancelar</a>
+        <button class="btn btn-primary">Guardar transacción</button>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

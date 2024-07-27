@@ -1,0 +1,12 @@
+﻿@model ObjetivoViewModel
+@{
+    var objetivo = ViewBag.message;
+}
+<h2>¿Seguro quieres eliminar el objetivo @objetivo.NombreObjetivo?</h2>
+
+<div>
+    <form asp-action="EliminarObjetivo" method="post">
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

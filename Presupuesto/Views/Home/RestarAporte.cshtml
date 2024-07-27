@@ -1,0 +1,21 @@
+﻿
+@model TransaccionesDTO
+
+@{
+    var transaccion = ViewBag.message;
+}
+
+
+<h4>¿Desea continuar?</h4>
+<p>
+    <b>
+        Esta accion es irreversible, al restar el aporte con la factura #@transaccion.CodigoFactura, tambien se restara del aporte total
+        junto a su transaccion.</b></p>
+
+<div>
+    <form asp-action="RestarAporte" method="post">
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a asp-action="ListadoAportes" asp-route-id="@transaccion.PersonaId" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+
